@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activities.Splash">
+    android:fitsSystemWindows="true"
+    android:background="@drawable/splash_screen_background"
+    android:elevation="4dp"
+    tools:context=".view.activities.Splash"
+    android:gravity="center"
 
-</android.support.constraint.ConstraintLayout>
+    tools:targetApi="s">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/utt_logo_169"
+        android:adjustViewBounds="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:foregroundGravity="center"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        />
+</RelativeLayout>
