@@ -16,4 +16,14 @@
     <string name="address_hint">Address Here</string>
     <string name="sign_up">Sign up</string>
     <string name="gender_label">Gender</string>
+    <string name="add">Add</string>
+    <string name="full_name">Full name</string>
+    <string name="student_name_hint">Name here</string>
+    <string name="student_code">Student code</string>
+    <string name="student_code_hint">Student Code Here</string>
+    <string name="class_name_hint">Class Name Here</string>
+    <string name="class_name">Class</string>
+    <string name="grade">Grade</string>
+    <string name="grade_hint">Grade here</string>
+    <string name="address">Address</string>
 </resources>

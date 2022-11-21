@@ -1,13 +1,13 @@
 package vn.edu.utt.uttqlsv.view.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType
-import android.view.View
+import android.text.method.PasswordTransformationMethod
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.edu.utt.uttqlsv.R
 import vn.edu.utt.uttqlsv.controller.LoginController
+
 
 class Login : AppCompatActivity() {
     private var isVisiblePassword = false
@@ -20,14 +20,14 @@ class Login : AppCompatActivity() {
 
         show_password_btn.setOnClickListener{
             if (isVisiblePassword) {
-                show_password_btn.setImageResource(R.drawable.ic_visibility_off)
-                password_edt.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                show_password_btn.setImageResource(R.drawable.ic_visibility)
+                password_edt.transformationMethod = PasswordTransformationMethod()
                 isVisiblePassword = false
 
             }
             else {
-                show_password_btn.setImageResource(R.drawable.ic_visibility)
-                password_edt.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                show_password_btn.setImageResource(R.drawable.ic_visibility_off)
+                password_edt.transformationMethod = null
                 isVisiblePassword = true
             }
 
