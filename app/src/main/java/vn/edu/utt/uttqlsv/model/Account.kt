@@ -6,5 +6,5 @@ data class Account(
     var email: String,
     var phoneNumber: String,
     var gender: Gender,
-    var address: String
+    var address: String,
 )
