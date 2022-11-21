@@ -32,20 +32,21 @@ class StudentRealmDatabaseHelper {
         Log.d("Realm Log","Inserted student $student")
     }
 
-    fun update(student: Student) {
+    fun update(studentCode: String, newDataStudent: Student) {
         realm.writeBlocking {
             val studentTarget: Student? =
-                this.query<Student>("studentCode == $0",student.studentCode).first().find()
+                this.query<Student>("studentCode == $0",studentCode).first().find()
 
-            studentTarget?.name = student.name
-            studentTarget?.gender = student.gender
-            studentTarget?.studentCode = student.studentCode
-            studentTarget?.grade = student.grade
-            studentTarget?.className = student.className
-            studentTarget?.score = student.score
-            studentTarget?.avgScore = student.avgScore
-            studentTarget?.address = student.address
+            studentTarget?.name = newDataStudent.name
+            studentTarget?.gender = newDataStudent.gender
+            studentTarget?.grade = newDataStudent.grade
+            studentTarget?.className = newDataStudent.className
+            studentTarget?.score = newDataStudent.score
+            studentTarget?.avgScore = newDataStudent.avgScore
+            studentTarget?.address = newDataStudent.address
+
         }
+        Log.d("Realm Log","updated!")
     }
 
     fun delete(student: Student) {

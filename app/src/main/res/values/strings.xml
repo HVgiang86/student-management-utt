@@ -26,4 +26,7 @@
     <string name="grade">Grade</string>
     <string name="grade_hint">Grade here</string>
     <string name="address">Address</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
 </resources>

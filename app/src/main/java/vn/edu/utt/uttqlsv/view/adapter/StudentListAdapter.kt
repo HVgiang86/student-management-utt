@@ -1,9 +1,7 @@
 package vn.edu.utt.uttqlsv.view.adapter
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +24,10 @@ class StudentListAdapter(
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener,View.OnLongClickListener {
+    var clickedPosition: Int = 0
+
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener,
+        View.OnCreateContextMenuListener {
         val studentCodeTV: TextView = itemView.findViewById(R.id.student_code_tv)
         val studentNameTV: TextView = itemView.findViewById(R.id.student_name_tv)
         val genderTV: TextView = itemView.findViewById(R.id.gender_tv)
@@ -36,20 +37,27 @@ class StudentListAdapter(
 
         init {
             itemView.setOnClickListener(this)
-            itemView.setOnLongClickListener(this)
+            itemView.setOnCreateContextMenuListener(this)
         }
 
         override fun onClick(v: View?) {
-            clickListener.onClick(v!!,adapterPosition,false)
+            clickListener.onClick(v!!, adapterPosition)
         }
 
-        override fun onLongClick(v: View?): Boolean {
-            clickListener.onClick(v!!,adapterPosition,true)
-            return true
-        }
-
-        fun setOnClickListener(listener: ItemClickListener){
+        fun setOnClickListener(listener: ItemClickListener) {
             clickListener = listener
+        }
+
+        override fun onCreateContextMenu(
+            menu: ContextMenu?,
+            v: View?,
+            menuInfo: ContextMenu.ContextMenuInfo?
+        ) {
+            menu?.setHeaderTitle("Action Menu")
+            menu?.add(Menu.NONE, R.id.context_menu_action_edit, Menu.NONE, "Edit")
+            menu?.add(Menu.NONE, R.id.context_menu_action_delete, Menu.NONE, "Delete")
+            menu?.getItem(0)?.setIcon(R.drawable.ic_edit)
+            menu?.getItem(1)?.setIcon(R.drawable.ic_delete)
         }
     }
 
@@ -73,24 +81,14 @@ class StudentListAdapter(
             selectionList[position] = isChecked
         }
 
-        holder.setOnClickListener(object : ItemClickListener{
-            override fun onClick(view: View, position: Int, isLongClick: Boolean) {
-                when(isLongClick) {
-                    //long click
-                    true -> {
-
-                    }
-
-                    //short click
-                    false -> {
-                        val studentDetailFragment = StudentDetail.newInstance(studentList[position].studentCode)
-                        val manager = activity.supportFragmentManager
-                        val transaction = manager.beginTransaction()
-                        transaction.add(R.id.student_detail_fragment_container,studentDetailFragment)
-                        transaction.addToBackStack("On Top Of Backstack").commit()
-
-                    }
-                }
+        holder.setOnClickListener(object : ItemClickListener {
+            override fun onClick(view: View, position: Int) {
+                val studentDetailFragment =
+                    StudentDetail.newInstance(studentList[position].studentCode)
+                val manager = activity.supportFragmentManager
+                val transaction = manager.beginTransaction()
+                transaction.add(R.id.student_detail_fragment_container, studentDetailFragment)
+                transaction.addToBackStack("On Top Of Backstack").commit()
             }
         })
 
@@ -100,9 +98,8 @@ class StudentListAdapter(
         return studentList.size
     }
 
-    interface ItemClickListener{
-        fun onClick(view: View, position: Int, isLongClick: Boolean)
+    interface ItemClickListener {
+        fun onClick(view: View, position: Int)
     }
-
 
 }
