@@ -4,6 +4,7 @@ import android.util.Log
 import io.realm.kotlin.Realm
 import io.realm.kotlin.RealmConfiguration
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.query.RealmResults
 import vn.edu.utt.uttqlsv.model.Student
 
 class StudentRealmDatabaseHelper {
@@ -18,8 +19,15 @@ class StudentRealmDatabaseHelper {
     }
 
     fun insert(student: Student) {
+
         realm.writeBlocking {
-            this.copyToRealm(student)
+            val studentTarget: Student? =
+                this.query<Student>("studentCode == $0",student.studentCode).first().find()
+
+            if (studentTarget == null)
+                this.copyToRealm(student)
+
+
         }
         Log.d("Realm Log","Inserted student $student")
     }
@@ -46,6 +54,16 @@ class StudentRealmDatabaseHelper {
                 this.query<Student>("studentCode == $0",student.studentCode).first().find()
             delete(studentTarget!!)
         }
+    }
+
+    fun read(): MutableList<Student> {
+        val studentList = mutableListOf<Student>()
+        val resultsList: RealmResults<Student> = realm.query<Student>().find()
+        for (a in resultsList) {
+            studentList.add(a)
+        }
+
+        return studentList
     }
 
     fun close() {

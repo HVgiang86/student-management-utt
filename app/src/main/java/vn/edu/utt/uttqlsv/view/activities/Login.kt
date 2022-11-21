@@ -3,6 +3,8 @@ package vn.edu.utt.uttqlsv.view.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
+import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
 import vn.edu.utt.uttqlsv.R
 import vn.edu.utt.uttqlsv.controller.LoginController
@@ -17,10 +19,18 @@ class Login : AppCompatActivity() {
         loginController.loadStoredAccount(this)
 
         show_password_btn.setOnClickListener{
-            if (isVisiblePassword)
+            if (isVisiblePassword) {
                 show_password_btn.setImageResource(R.drawable.ic_visibility_off)
-            else
+                password_edt.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                isVisiblePassword = false
+
+            }
+            else {
                 show_password_btn.setImageResource(R.drawable.ic_visibility)
+                password_edt.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                isVisiblePassword = true
+            }
+
         }
 
         login_btn.setOnClickListener{

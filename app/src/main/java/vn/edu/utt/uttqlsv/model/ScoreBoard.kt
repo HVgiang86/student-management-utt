@@ -46,6 +46,8 @@ data class ScoreBoard(
             sum += biologyScore
         }
 
+        if (count != 0)
+            return 0f
         return sum/(count*1.0f)
     }
 }
