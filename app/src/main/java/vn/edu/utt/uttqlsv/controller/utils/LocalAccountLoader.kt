@@ -22,7 +22,7 @@ object LocalAccountLoader {
     private lateinit var preferences: SharedPreferences
 
     fun openPreferenceMode(context: Context) {
-        context.getSharedPreferences(PREFS_FILE, PREFS_MODE)
+        preferences = context.getSharedPreferences(PREFS_FILE, PREFS_MODE)
     }
 
     fun getStoredAccountList(): MutableList<Account> {
@@ -33,6 +33,7 @@ object LocalAccountLoader {
             Log.d("ACCOUNT TAG","$numberOfAccount accounts stored!")
             for (i in 0.until(numberOfAccount)) {
                 val stringJson = preferences.getString(USER_DETAIL_KEY+i,"")
+                Log.d("JSON TAG", stringJson!!)
                 val jsonObject = JSONObject(stringJson!!)
                 val username = jsonObject.getString(USERNAME_KEY)
                 val password = jsonObject.getString(PASSWORD_KEY)
@@ -56,7 +57,7 @@ object LocalAccountLoader {
 
     fun storeAccountList(accountList: MutableList<Account>) {
         val editor = preferences.edit()
-        editor.putString(USER_AMOUNT_KEY, accountList.size.toString())
+        editor.putInt(USER_AMOUNT_KEY, accountList.size)
 
         for (i in 0.until(accountList.size)) {
             val jsonObject = JSONObject()
@@ -73,7 +74,7 @@ object LocalAccountLoader {
 
             jsonObject.put(ADDRESS_KEY,account.address)
 
-            editor.putString(USER_DETAIL_KEY+i,account.toString())
+            editor.putString(USER_DETAIL_KEY+i,jsonObject.toString())
         }
 
         editor.apply()

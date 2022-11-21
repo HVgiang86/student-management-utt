@@ -1,5 +1,7 @@
 package vn.edu.utt.uttqlsv.controller
 
+import android.content.Context
+import vn.edu.utt.uttqlsv.controller.utils.LocalAccountLoader
 import vn.edu.utt.uttqlsv.model.Account
 
 object LocalAccountManager {
@@ -16,7 +18,7 @@ object LocalAccountManager {
 
     fun isLoginValid(username: String, password:String): Boolean {
         for (account in accountList) {
-            if (account.username.equals(username) && account.hashPassword.equals(password)) {
+            if (account.username == username && account.hashPassword.equals(password)) {
                 return true
             }
         }
@@ -25,5 +27,16 @@ object LocalAccountManager {
 
     fun addAccount(account: Account) {
         accountList.add(account)
+    }
+
+    fun getStoredAccount(context: Context) {
+        LocalAccountLoader.openPreferenceMode(context)
+
+        accountList = LocalAccountLoader.getStoredAccountList()
+    }
+
+    fun storeAccountList() {
+        LocalAccountLoader.storeAccountList(accountList)
+
     }
 }

@@ -7,4 +7,13 @@
     <string name="password_label">Password</string>
     <string name="password_hint">password here</string>
     <string name="login">Login</string>
+    <string name="sign_up_text_btn">Don\'t have an account? Sign up!</string>
+    <string name="re_password_label">Re-password</string>
+    <string name="email_label">Email</string>
+    <string name="email_hint">abcd1@gmail.com</string>
+    <string name="phone_number_label">Phone Number</string>
+    <string name="phone_number_hint">0987654321</string>
+    <string name="address_hint">Address Here</string>
+    <string name="sign_up">Sign up</string>
+    <string name="gender_label">Gender</string>
 </resources>

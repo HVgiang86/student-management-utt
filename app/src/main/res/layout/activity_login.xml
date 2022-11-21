@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/login_screen_background"
     android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    android:gravity="top"
     tools:context=".view.activities.Login">
 
     <RelativeLayout
@@ -104,5 +105,15 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/password_label"
         android:layout_marginTop="32dp"
+        android:layout_marginLeft="50dp"
         android:text="@string/login" />
+    <TextView
+        android:id="@+id/sign_up_text_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_up_text_btn"
+        android:layout_below="@id/login_btn"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="50dp"
+        />
 </RelativeLayout>
