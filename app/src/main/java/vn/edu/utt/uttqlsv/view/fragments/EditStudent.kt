@@ -153,35 +153,46 @@ class EditStudent : Fragment() {
             val newStudent = Student()
             newStudent.name = studentName
             newStudent.className = className
-            newStudent.grade = Integer.parseInt(grade)
+            if (grade.isNotEmpty())
+                newStudent.grade = Integer.parseInt(grade)
+            else
+                newStudent.grade = 10
+
             newStudent.gender = gender
             newStudent.address = address
 
-            if (mathScoreStr.isNotEmpty()) newStudent.mathScore = mathScoreStr.toFloat()
+            if (mathScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(mathScoreStr)) newStudent.mathScore =
+                mathScoreStr.toFloat()
             else newStudent.mathScore = 0f
 
-            if (literatureScoreStr.isNotEmpty()) newStudent.literatureScore =
-                literatureScoreStr.toFloat()
+            if (literatureScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(
+                    literatureScoreStr
+                )
+            ) newStudent.literatureScore = literatureScoreStr.toFloat()
             else newStudent.literatureScore = 0f
 
-            if (englishScoreStr.isNotEmpty()) newStudent.englishScore = englishScoreStr.toFloat()
+            if (englishScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(englishScoreStr)) newStudent.englishScore =
+                englishScoreStr.toFloat()
             else newStudent.englishScore = 0f
 
-            if (physicScoreStr.isNotEmpty()) newStudent.physicScore = physicScoreStr.toFloat()
+            if (physicScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(physicScoreStr)) newStudent.physicScore =
+                physicScoreStr.toFloat()
             else newStudent.physicScore = 0f
 
-            if (geographyScoreStr.isNotEmpty()) newStudent.geographyScore =
+            if (geographyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(geographyScoreStr)) newStudent.geographyScore =
                 geographyScoreStr.toFloat()
             else newStudent.geographyScore = 0f
 
-            if (historyScoreStr.isNotEmpty()) newStudent.historyScore = historyScoreStr.toFloat()
+            if (historyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(historyScoreStr)) newStudent.historyScore =
+                historyScoreStr.toFloat()
             else newStudent.historyScore = 0f
 
-            if (chemistryScoreStr.isNotEmpty()) newStudent.chemistryScore =
+            if (chemistryScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(chemistryScoreStr)) newStudent.chemistryScore =
                 chemistryScoreStr.toFloat()
             else newStudent.chemistryScore = 0f
 
-            if (biologyScoreStr.isNotEmpty()) newStudent.biologyScore = biologyScoreStr.toFloat()
+            if (biologyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(biologyScoreStr)) newStudent.biologyScore =
+                biologyScoreStr.toFloat()
             else newStudent.biologyScore = 0f
 
             val dobStr = toDateString(initDate, initMonth, initYear)

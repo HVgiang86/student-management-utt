@@ -47,8 +47,10 @@ object StudentListManager {
     }
 
     fun deleteStudent(student: Student) {
-        if (studentList.contains(student)) {
-            studentList.remove(student)
+        for (a in studentList) {
+            if (a.studentCode == student.studentCode) {
+                studentList.remove(a)
+            }
         }
         realmHelper.delete(student)
     }

@@ -106,10 +106,9 @@ class StudentDetail : Fragment() {
         }
 
         deleteBtn.setOnClickListener {
-            StudentListManager.deleteStudent(student!!)
             val studentListActivity = activity as? StudentList
             studentListActivity?.onBackPressed()
-            studentListActivity?.refreshStudentList()
+            studentListActivity?.requestDeleteStudent(student!!)
         }
 
         editBtn.setOnClickListener {

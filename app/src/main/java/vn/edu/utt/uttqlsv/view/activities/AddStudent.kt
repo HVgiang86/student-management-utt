@@ -79,32 +79,45 @@ class AddStudent : AppCompatActivity() {
         student.studentCode = studentCode
         student.name = studentName
         student.className = className
-        student.grade = Integer.parseInt(grade)
+
+        if (grade.isNotEmpty()) student.grade = Integer.parseInt(grade)
+        else student.grade = 10
+
         student.gender = gender
         student.address = address
 
-        if (mathScoreStr.isNotEmpty()) student.mathScore = mathScoreStr.toFloat()
+        if (mathScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(mathScoreStr)) student.mathScore =
+            mathScoreStr.toFloat()
         else student.mathScore = 0f
 
-        if (literatureScoreStr.isNotEmpty()) student.literatureScore = literatureScoreStr.toFloat()
+        if (literatureScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(
+                literatureScoreStr
+            )
+        ) student.literatureScore = literatureScoreStr.toFloat()
         else student.literatureScore = 0f
 
-        if (englishScoreStr.isNotEmpty()) student.englishScore = englishScoreStr.toFloat()
+        if (englishScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(englishScoreStr)) student.englishScore =
+            englishScoreStr.toFloat()
         else student.englishScore = 0f
 
-        if (physicScoreStr.isNotEmpty()) student.physicScore = physicScoreStr.toFloat()
+        if (physicScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(physicScoreStr)) student.physicScore =
+            physicScoreStr.toFloat()
         else student.physicScore = 0f
 
-        if (geographyScoreStr.isNotEmpty()) student.geographyScore = geographyScoreStr.toFloat()
+        if (geographyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(geographyScoreStr)) student.geographyScore =
+            geographyScoreStr.toFloat()
         else student.geographyScore = 0f
 
-        if (historyScoreStr.isNotEmpty()) student.historyScore = historyScoreStr.toFloat()
+        if (historyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(historyScoreStr)) student.historyScore =
+            historyScoreStr.toFloat()
         else student.historyScore = 0f
 
-        if (chemistryScoreStr.isNotEmpty()) student.chemistryScore = chemistryScoreStr.toFloat()
+        if (chemistryScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(chemistryScoreStr)) student.chemistryScore =
+            chemistryScoreStr.toFloat()
         else student.chemistryScore = 0f
 
-        if (biologyScoreStr.isNotEmpty()) student.biologyScore = biologyScoreStr.toFloat()
+        if (biologyScoreStr.isNotEmpty() && Validator.isValidFloatingNumber(biologyScoreStr)) student.biologyScore =
+            biologyScoreStr.toFloat()
         else student.biologyScore = 0f
 
 

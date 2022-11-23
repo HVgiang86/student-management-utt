@@ -136,6 +136,11 @@ class StudentList : AppCompatActivity() {
         refreshStudentList()
     }
 
+    fun requestDeleteStudent(student: Student) {
+        StudentListManager.deleteStudent(student)
+        refreshStudentList()
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     fun refreshStudentList() {
         adapter.notifyDataSetChanged()

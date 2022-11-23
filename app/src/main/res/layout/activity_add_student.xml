@@ -7,7 +7,6 @@
     android:background="@drawable/information_screen_background"
     android:fitsSystemWindows="true"
     android:gravity="top"
-    android:theme="@style/Theme.AppCompat.Light.NoActionBar"
     tools:context=".view.activities.AddStudent">
 
     <ImageView
