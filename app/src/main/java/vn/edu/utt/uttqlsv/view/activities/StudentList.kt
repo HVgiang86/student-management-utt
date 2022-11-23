@@ -49,6 +49,7 @@ class StudentList : AppCompatActivity() {
         adapter = StudentListAdapter(this, studentList)
         recycler.adapter = adapter
 
+
         //Handle floating action button, this button will open add student activity
         fab.setOnClickListener {
             val intent = Intent(this, AddStudent::class.java)
@@ -66,6 +67,7 @@ class StudentList : AppCompatActivity() {
         when (item.itemId) {
 
             R.id.logout_menu -> {
+                StudentListManager.close()
                 val intent = Intent(this, Login::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
@@ -103,7 +105,7 @@ class StudentList : AppCompatActivity() {
         refreshStudentList()
     }
 
-    fun openStudentEditFragment(position: Int) {
+    private fun openStudentEditFragment(position: Int) {
         Toast.makeText(this, "Editor selected!", Toast.LENGTH_SHORT).show()
 
         val editStudent = EditStudent.newInstance(studentList[position].studentCode)
