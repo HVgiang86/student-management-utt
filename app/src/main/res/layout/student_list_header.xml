@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:alpha="0.75"
+    android:background="@color/amit_blue"
+    android:paddingStart="4dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="4dp"
+    tools:ignore="RtlSymmetry">
+
+    <TextView
+        android:id="@+id/student_list_header_student_code"
+        style="@style/studentListHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/student_code"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.15" />
+
+    <TextView
+        android:id="@+id/student_list_header_student_name"
+        style="@style/studentListHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/student_name"
+        app:layout_constraintBottom_toBottomOf="@id/student_list_header_student_code"
+        app:layout_constraintLeft_toRightOf="@id/student_list_header_student_code"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.4" />
+
+    <TextView
+        android:id="@+id/student_list_header_gender"
+        style="@style/studentListHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        app:layout_constraintBottom_toBottomOf="@id/student_list_header_student_code"
+        app:layout_constraintStart_toEndOf="@id/student_list_header_student_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.15" />
+
+    <TextView
+        android:id="@+id/date_of_birth_tv"
+        style="@style/studentListHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/date_of_birth"
+        app:layout_constraintBottom_toBottomOf="@id/student_list_header_student_code"
+        app:layout_constraintStart_toEndOf="@id/student_list_header_gender"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.2" />
+
+    <TextView
+        android:id="@+id/student_list_header_class_name"
+        style="@style/studentListHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/class_name"
+        app:layout_constraintBottom_toBottomOf="@id/student_list_header_student_code"
+        app:layout_constraintStart_toEndOf="@id/date_of_birth_tv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

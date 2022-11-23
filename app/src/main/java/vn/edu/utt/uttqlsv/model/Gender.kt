@@ -1,6 +1,6 @@
 package vn.edu.utt.uttqlsv.model
 
-enum class Gender {
-    Male,
-    Female
+object Gender {
+    const val MALE = true
+    const val FEMALE = false
 }

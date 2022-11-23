@@ -5,6 +5,6 @@ data class Account(
     var hashPassword: String,
     var email: String,
     var phoneNumber: String,
-    var gender: Gender,
+    var gender: Boolean,
     var address: String,
 )

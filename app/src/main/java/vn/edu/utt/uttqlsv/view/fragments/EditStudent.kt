@@ -1,25 +1,25 @@
 package vn.edu.utt.uttqlsv.view.fragments
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_add_student.*
 import kotlinx.android.synthetic.main.activity_sign_up.*
 import kotlinx.android.synthetic.main.fragment_edit_student.*
 import vn.edu.utt.uttqlsv.R
 import vn.edu.utt.uttqlsv.controller.StudentListManager
+import vn.edu.utt.uttqlsv.controller.utils.Validator
 import vn.edu.utt.uttqlsv.model.Gender
-import vn.edu.utt.uttqlsv.model.ScoreBoard
 import vn.edu.utt.uttqlsv.model.Student
+import vn.edu.utt.uttqlsv.view.activities.StudentList
+import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +30,7 @@ private const val ARG_STUDENT = "student_param"
  * Use the [EditStudent.newInstance] factory method to
  * create an instance of this fragment.
  */
+@Suppress("DEPRECATION")
 class EditStudent : Fragment() {
     // TODO: Rename and change types of parameters
     private var studentCode: String? = null
@@ -48,13 +49,14 @@ class EditStudent : Fragment() {
         }
     }
 
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId", "SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val v = inflater.inflate(R.layout.fragment_edit_student, container, false)
 
+        //init spinner for gender picker dropdown menu
         val genderDropDownListItems = arrayOf("Male", "Female")
         val adapter = ArrayAdapter(
             requireContext(), android.R.layout.simple_spinner_item, genderDropDownListItems
@@ -63,6 +65,10 @@ class EditStudent : Fragment() {
         val spinner: Spinner = v.findViewById(R.id.edit_student_fragment_gender_spinner)
         spinner.adapter = adapter
 
+        if (student?.gender == Gender.MALE) spinner.setSelection(0)
+        else spinner.setSelection(1)
+
+        //Init view for each property of Student
         val studentCodeEdt: TextView = v.findViewById(R.id.edit_student_fragment_student_code_edt)
         val nameEdt: EditText = v.findViewById(R.id.edit_student_fragment_student_name_edt)
         val classNameEdt: EditText = v.findViewById(R.id.edit_student_fragment_class_name_edt)
@@ -76,38 +82,65 @@ class EditStudent : Fragment() {
         val physicEdt: EditText = v.findViewById(R.id.edit_student_fragment_physic_score_edt)
         val geographyEdt: EditText = v.findViewById(R.id.edit_student_fragment_geography_score_edt)
         val historyEdt: EditText = v.findViewById(R.id.edit_student_fragment_history_score_edt)
+        val biologyEdt: EditText = v.findViewById(R.id.edit_student_fragment_biology_score_edt)
         val chemistryEdt: EditText = v.findViewById(R.id.edit_student_fragment_chemistry_score_edt)
-        val saveBtn:Button = v.findViewById(R.id.save_btn)
+        val saveBtn: Button = v.findViewById(R.id.save_btn)
+        val dobTV: TextView = v.findViewById(R.id.edit_student_fragment_date_of_birth_tv)
+        val datePickerBtn: ImageButton = v.findViewById(R.id.edit_student_fragment_show_date_picker)
 
+
+        var date = SimpleDateFormat("dd/MM/yyyy").parse(student?.dateOfBirth!!)
+        if (date == null) date = Date(System.currentTimeMillis())
+        Log.d("Edit Student", "$date")
+
+        var initYear = date.year + 1900
+        var initMonth = date.month + 1
+        var initDate = date.date
+
+        dobTV.text = "$initDate-$initMonth-$initYear"
+        val dateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            dobTV.text = "$dayOfMonth/${month + 1}/$year"
+            initYear = year
+            initMonth = month + 1
+            initDate = dayOfMonth
+        }
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            android.R.style.Theme_Material_Light_Dialog_NoActionBar,
+            dateSetListener,
+            initYear,
+            initMonth,
+            initDate
+        )
+
+        datePickerBtn.setOnClickListener { datePickerDialog.show() }
+
+        //set initial value for each view of properties
         studentCodeEdt.text = student?.studentCode
         nameEdt.setText(student?.name)
         classNameEdt.setText(student?.className)
         gradeEdt.setText(student?.grade.toString())
-
-        var i: Long = 0
-        i = if (student?.gender == Gender.Male) 0
-        else 1
-        spinner.setSelection(i.toInt())
-
         addressEdt.setText(student?.address)
-        mathEdt.setText(student?.score?.mathScore.toString())
-        literatureEdt.setText(student?.score?.literatureScore.toString())
-        englishEdt.setText(student?.score?.englishScore.toString())
-        physicEdt.setText(student?.score?.physicScore.toString())
-        geographyEdt.setText(student?.score?.geographyScore.toString())
-        historyEdt.setText(student?.score?.historyScore.toString())
-        chemistryEdt.setText(student?.score?.chemistryScore.toString())
+        mathEdt.setText(student?.mathScore.toString())
+        literatureEdt.setText(student?.literatureScore.toString())
+        englishEdt.setText(student?.englishScore.toString())
+        physicEdt.setText(student?.physicScore.toString())
+        geographyEdt.setText(student?.geographyScore.toString())
+        historyEdt.setText(student?.historyScore.toString())
+        chemistryEdt.setText(student?.chemistryScore.toString())
+        biologyEdt.setText(student?.biologyScore.toString())
 
+        //Handle Save Button click event
         saveBtn.setOnClickListener {
+
             val studentName = nameEdt.text.toString().trim()
             val className = classNameEdt.text.toString().trim()
             val grade = gradeEdt.text.toString().trim()
-            val gender: Gender
-            val i: Long = 0
-            gender = if (edit_student_fragment_gender_spinner.selectedItemId == i) Gender.Male
-            else Gender.Female
+            val gender: Boolean =
+                if (edit_student_fragment_gender_spinner.selectedItemId == "0".toLong()) Gender.MALE
+                else Gender.FEMALE
 
-            var address = addressEdt.text.toString().trim()
+            val address = addressEdt.text.toString().trim()
             val mathScoreStr = mathEdt.text.toString().trim()
             val literatureScoreStr = literatureEdt.text.toString().trim()
             val englishScoreStr = englishEdt.text.toString().trim()
@@ -115,25 +148,68 @@ class EditStudent : Fragment() {
             val geographyScoreStr = geographyEdt.text.toString().trim()
             val historyScoreStr = historyEdt.text.toString().trim()
             val chemistryScoreStr = chemistryEdt.text.toString().trim()
+            val biologyScoreStr = biologyEdt.text.toString().trim()
 
-            val scoreBoard = ScoreBoard()
-            if (mathScoreStr.isNotEmpty()) scoreBoard.mathScore = mathScoreStr.toFloat()
-            if (literatureScoreStr.isNotEmpty()) scoreBoard.literatureScore =
+            val newStudent = Student()
+            newStudent.name = studentName
+            newStudent.className = className
+            newStudent.grade = Integer.parseInt(grade)
+            newStudent.gender = gender
+            newStudent.address = address
+
+            if (mathScoreStr.isNotEmpty()) newStudent.mathScore = mathScoreStr.toFloat()
+            else newStudent.mathScore = 0f
+
+            if (literatureScoreStr.isNotEmpty()) newStudent.literatureScore =
                 literatureScoreStr.toFloat()
-            if (englishScoreStr.isNotEmpty()) scoreBoard.englishScore = englishScoreStr.toFloat()
-            if (physicScoreStr.isNotEmpty()) scoreBoard.physicScore = physicScoreStr.toFloat()
-            if (geographyScoreStr.isNotEmpty()) scoreBoard.geographyScore =
+            else newStudent.literatureScore = 0f
+
+            if (englishScoreStr.isNotEmpty()) newStudent.englishScore = englishScoreStr.toFloat()
+            else newStudent.englishScore = 0f
+
+            if (physicScoreStr.isNotEmpty()) newStudent.physicScore = physicScoreStr.toFloat()
+            else newStudent.physicScore = 0f
+
+            if (geographyScoreStr.isNotEmpty()) newStudent.geographyScore =
                 geographyScoreStr.toFloat()
-            if (historyScoreStr.isNotEmpty()) scoreBoard.historyScore = historyScoreStr.toFloat()
-            if (chemistryScoreStr.isNotEmpty()) scoreBoard.chemistryScore =
+            else newStudent.geographyScore = 0f
+
+            if (historyScoreStr.isNotEmpty()) newStudent.historyScore = historyScoreStr.toFloat()
+            else newStudent.historyScore = 0f
+
+            if (chemistryScoreStr.isNotEmpty()) newStudent.chemistryScore =
                 chemistryScoreStr.toFloat()
+            else newStudent.chemistryScore = 0f
 
-            StudentListManager.editStudentInfo(student!!,
-                studentCode.toString(), studentName,className,grade, gender, address, scoreBoard)
+            if (biologyScoreStr.isNotEmpty()) newStudent.biologyScore = biologyScoreStr.toFloat()
+            else newStudent.biologyScore = 0f
 
+            val dobStr = toDateString(initDate, initMonth, initYear)
+            Log.d("Add Student", "Date String $dobStr")
+            if (Validator.isValidDateString(dobStr)) {
+                newStudent.dateOfBirth = dobStr
+                StudentListManager.updateStudentInfo(student!!, newStudent)
+            }
+
+
+            val studentListActivity = activity as? StudentList
+            studentListActivity?.onBackPressed()
+            studentListActivity?.refreshStudentList()
         }
 
         return v
+    }
+
+
+    private fun toDateString(day: Int, month: Int, year: Int): String {
+        var s = ""
+        s += if (day < 10) "0$day/"
+        else "$day/"
+
+        s += if (month < 10) "0$month/"
+        else "$month/"
+        s += "$year"
+        return s
     }
 
     companion object {
@@ -141,8 +217,6 @@ class EditStudent : Fragment() {
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
          *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
          * @return A new instance of fragment EditStudent.
          */
         // TODO: Rename and change types and number of parameters
@@ -153,4 +227,5 @@ class EditStudent : Fragment() {
             }
         }
     }
+
 }

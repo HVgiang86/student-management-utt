@@ -11,39 +11,49 @@ import vn.edu.utt.uttqlsv.controller.LoginController
 
 class Login : AppCompatActivity() {
     private var isVisiblePassword = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        //Load saved account from Shared Preferences
         val loginController = LoginController()
         loginController.loadStoredAccount(this)
 
-        show_password_btn.setOnClickListener{
-            if (isVisiblePassword) {
-                show_password_btn.setImageResource(R.drawable.ic_visibility)
-                password_edt.transformationMethod = PasswordTransformationMethod()
-                isVisiblePassword = false
-
-            }
-            else {
-                show_password_btn.setImageResource(R.drawable.ic_visibility_off)
-                password_edt.transformationMethod = null
-                isVisiblePassword = true
-            }
-
+        //Handle show password button
+        //switch between visible and invisible password
+        login_in_activity_show_password_btn.setOnClickListener {
+            if (isVisiblePassword) setPasswordInvisible()
+            else setPasswordVisible()
         }
 
-        login_btn.setOnClickListener{
-            val username = username_edt.text.toString().trim()
-            val password = password_edt.text.toString().trim()
+        //Handle Login button
+        login_btn.setOnClickListener {
+            val username = login_activity_username_edt.text.toString().trim()
+            val password = login_activity_password_edt.text.toString().trim()
+
             if (username.isNotEmpty() && password.isNotEmpty()) {
-                loginController.login(context = this,username,password)
+                if (loginController.login(this, username, password)) {
+                    login_activity_password_edt.setText("")
+                }
             }
         }
 
-        sign_up_text_btn.setOnClickListener{
-            val intent = Intent(this,SignUp::class.java)
+        login_activity_sign_up_text_btn.setOnClickListener {
+            val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun setPasswordVisible() {
+        login_in_activity_show_password_btn.setImageResource(R.drawable.ic_visibility_off)
+        login_activity_password_edt.transformationMethod = null
+        isVisiblePassword = true
+    }
+
+    private fun setPasswordInvisible() {
+        login_in_activity_show_password_btn.setImageResource(R.drawable.ic_visibility)
+        login_activity_password_edt.transformationMethod = PasswordTransformationMethod()
+        isVisiblePassword = false
     }
 }

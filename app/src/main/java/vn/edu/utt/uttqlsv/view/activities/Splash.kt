@@ -1,8 +1,7 @@
 package vn.edu.utt.uttqlsv.view.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import vn.edu.utt.uttqlsv.R
 
 class Splash : AppCompatActivity() {

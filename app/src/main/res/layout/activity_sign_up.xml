@@ -1,201 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/sign_up_screen_background"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:background="@drawable/information_screen_background"
+    android:fitsSystemWindows="true"
+    android:gravity="top"
     tools:context=".view.activities.SignUp">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/logo_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+        android:layout_marginTop="30dp"
+        android:adjustViewBounds="true"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:focusable="false"
+        android:longClickable="false"
+        android:scaleType="fitXY"
+        android:src="@drawable/logo_container_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.55"
+        tools:ignore="ContentDescription" />
 
-        <TextView
-            android:id="@+id/username_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/username_label" />
 
-        <EditText
-            android:id="@+id/username_edt"
+    <TextView
+        style="@style/screenTitleTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="false"
+        android:contextClickable="false"
+        android:focusable="false"
+        android:gravity="center"
+        android:longClickable="false"
+        android:padding="32dp"
+        android:text="@string/register"
+        app:layout_constraintBottom_toBottomOf="@id/logo_container"
+        app:layout_constraintLeft_toLeftOf="@id/logo_container"
+        app:layout_constraintRight_toRightOf="@id/logo_container"
+        app:layout_constraintTop_toTopOf="@id/logo_container" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="8dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_container">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/username_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/username_hint"
-            android:inputType="text" />
-    </RelativeLayout>
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
+            android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo_container">
 
-        <TextView
-            android:id="@+id/password_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/password_label" />
+                <TextView
+                    android:id="@+id/username_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/username_label" />
 
-        <EditText
-            android:id="@+id/password_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/password_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:password="true" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/username_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/username_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/username_hint"
+                    android:inputType="text"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
-        <TextView
-            android:id="@+id/re_password_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/re_password_label" />
+                <TextView
+                    android:id="@+id/password_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/password_label" />
 
-        <EditText
-            android:id="@+id/re_password_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/re_password_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:password="true" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/password_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/password_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
-        <TextView
-            android:id="@+id/gender_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/gender_label" />
+                <TextView
+                    android:id="@+id/re_password_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/re_password_label" />
 
-        <Spinner
-            android:id="@+id/gender_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/gender_label"
-            android:layout_toEndOf="@id/gender_label"
-            android:spinnerMode="dialog"/>
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/re_password_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/re_password_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
-        <TextView
-            android:id="@+id/email_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/email_label" />
+                <TextView
+                    android:id="@+id/gender_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/gender_label" />
 
-        <EditText
-            android:id="@+id/email_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/email_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress" />
-    </RelativeLayout>
+                <Spinner
+                    android:id="@+id/gender_spinner"
+                    style="@style/TextAppearance.AppCompat.Widget.DropDownItem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/gender_label"
+                    android:spinnerMode="dialog" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
-        <TextView
-            android:id="@+id/phone_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/phone_number_label" />
+                <TextView
+                    android:id="@+id/email_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/email_label" />
 
-        <EditText
-            android:id="@+id/phone_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/phone_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/phone_number_hint"
-            android:inputType="phone" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/email_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/email_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
 
-        <TextView
-            android:id="@+id/address_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="@string/phone_number_label" />
+                <TextView
+                    android:id="@+id/phone_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/phone_number_label" />
 
-        <EditText
-            android:id="@+id/address_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/address_label"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:hint="@string/address_hint"
-            android:inputType="textPostalAddress" />
-    </RelativeLayout>
+                <EditText
+                    android:id="@+id/phone_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/phone_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/phone_number_hint"
+                    android:inputType="phone"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
 
-    <Button
-        android:id="@+id/sign_up_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up" />
-</androidx.appcompat.widget.LinearLayoutCompat>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <TextView
+                    android:id="@+id/address_label"
+                    style="@style/labelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@string/address" />
+
+                <EditText
+                    android:id="@+id/address_edt"
+                    style="@style/editTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address_label"
+                    android:layout_alignParentStart="true"
+                    android:hint="@string/address_hint"
+                    android:inputType="textPostalAddress"
+                    android:importantForAutofill="no" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/sign_up_btn"
+                style="@style/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="@string/sign_up" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

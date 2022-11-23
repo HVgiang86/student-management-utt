@@ -1,7 +1,5 @@
 package vn.edu.utt.uttqlsv.controller
 
-import vn.edu.utt.uttqlsv.model.Gender
-import vn.edu.utt.uttqlsv.model.ScoreBoard
 import vn.edu.utt.uttqlsv.model.Student
 import vn.edu.utt.uttqlsv.model.database.StudentRealmDatabaseHelper
 
@@ -11,42 +9,20 @@ object StudentListManager {
 
     init {
         realmHelper.open()
-
-        val student1 = Student("00001", "Hoang Van A", "12A1", 12, Gender.Male, "this is address")
-        val student2 = Student("00002", "Tran Thi B", "12A1", 12, Gender.Female, "this is address")
-        val student3 = Student("00003", "Hoang Thi C", "12A1", 12, Gender.Female, "this is address")
-        val student4 =
-            Student("00004", "Nguyen Hoang Tuan D", "12A1", 12, Gender.Male, "this is address")
-
-        realmHelper.insert(student1)
-        realmHelper.insert(student2)
-        realmHelper.insert(student3)
-        realmHelper.insert(student4)
-
         loadStoredStudentList()
     }
 
-    fun loadStoredStudentList() {
+    private fun loadStoredStudentList() {
         studentList = realmHelper.read()
     }
 
 
-    fun editStudentInfo(
-        student: Student,
-        studentCode: String,
-        name: String,
-        className: String,
-        grade: String,
-        gender: Gender,
-        address: String,
-        scoreBoard: ScoreBoard
+    fun updateStudentInfo(
+        student: Student, newStudent: Student
     ) {
-        val gradeNumber = Integer.parseInt(grade)
-        val newDataStudent = Student(studentCode, name, className, gradeNumber, gender, address)
-        student.score = scoreBoard
-        realmHelper.update(studentCode, newDataStudent)
+        realmHelper.update(student.studentCode, newStudent)
         studentList.remove(student)
-        studentList.add(newDataStudent)
+        studentList.add(newStudent)
     }
 
     private fun isStudentCodeExist(studentCode: String): Boolean {
@@ -59,21 +35,12 @@ object StudentListManager {
     }
 
     fun addAnStudent(
-        studentCode: String,
-        name: String,
-        className: String,
-        grade: String,
-        gender: Gender,
-        address: String,
-        scoreBoard: ScoreBoard
+        student: Student
     ): Boolean {
-        if (isStudentCodeExist(studentCode)) {
+        if (student.studentCode.isEmpty()) return false
+        if (isStudentCodeExist(student.studentCode)) {
             return false
         }
-        val gradeNumber = Integer.parseInt(grade)
-        val student = Student(studentCode, name, className, gradeNumber, gender, address)
-        student.score = scoreBoard
-        student.updateAvgScore()
         studentList.add(student)
         realmHelper.insert(student)
         return true
@@ -94,5 +61,9 @@ object StudentListManager {
         }
 
         realmHelper.delete(student)
+    }
+
+    fun close() {
+        realmHelper.close()
     }
 }

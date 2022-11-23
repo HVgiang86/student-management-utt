@@ -8,17 +8,17 @@ object LocalAccountManager {
     private var accountList = mutableListOf<Account>()
 
     fun isUsernameExist(username: String): Boolean {
-        for(account in accountList) {
-            if (account.username.equals(username)) {
+        for (account in accountList) {
+            if (account.username == username) {
                 return true
             }
         }
         return false
     }
 
-    fun isLoginValid(username: String, password:String): Boolean {
+    fun isLoginValid(username: String, password: String): Boolean {
         for (account in accountList) {
-            if (account.username == username && account.hashPassword.equals(password)) {
+            if (account.username == username && account.hashPassword == password) {
                 return true
             }
         }

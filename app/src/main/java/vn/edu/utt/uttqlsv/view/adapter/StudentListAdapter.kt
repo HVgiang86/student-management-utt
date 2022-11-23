@@ -2,7 +2,6 @@ package vn.edu.utt.uttqlsv.view.adapter
 
 import android.content.Context
 import android.view.*
-import android.widget.CheckBox
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import vn.edu.utt.uttqlsv.R
@@ -13,16 +12,8 @@ import vn.edu.utt.uttqlsv.view.fragments.StudentDetail
 
 @Suppress("DEPRECATION")
 class StudentListAdapter(
-    private var activity: StudentList,
-    private var studentList: MutableList<Student>,
-    private var selectionList: BooleanArray
+    private var activity: StudentList, private var studentList: MutableList<Student>
 ) : RecyclerView.Adapter<StudentListAdapter.ViewHolder>() {
-
-    init {
-        for (i in 0.until(studentList.size)) {
-            selectionList[i] = false
-        }
-    }
 
     var clickedPosition: Int = 0
 
@@ -32,7 +23,7 @@ class StudentListAdapter(
         val studentNameTV: TextView = itemView.findViewById(R.id.student_name_tv)
         val genderTV: TextView = itemView.findViewById(R.id.gender_tv)
         val dateOfBirthTV: TextView = itemView.findViewById(R.id.date_of_birth_tv)
-        val selectionCheckBox: CheckBox = itemView.findViewById(R.id.selection_checkbox)
+        val classNameTV: TextView = itemView.findViewById(R.id.class_name_tv)
         private lateinit var clickListener: ItemClickListener
 
         init {
@@ -49,9 +40,7 @@ class StudentListAdapter(
         }
 
         override fun onCreateContextMenu(
-            menu: ContextMenu?,
-            v: View?,
-            menuInfo: ContextMenu.ContextMenuInfo?
+            menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?
         ) {
             menu?.setHeaderTitle("Action Menu")
             menu?.add(Menu.NONE, R.id.context_menu_action_edit, Menu.NONE, "Edit")
@@ -70,28 +59,23 @@ class StudentListAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.studentCodeTV.text = studentList[position].studentCode
         holder.studentNameTV.text = studentList[position].name
-        if (studentList[position].gender == Gender.Male)
-            holder.genderTV.text = "Male"
-        else
-            holder.genderTV.text = "Female"
+        if (studentList[position].gender == Gender.MALE) holder.genderTV.text =
+            activity.getString(R.string.male)
+        else holder.genderTV.text = activity.getString(R.string.female)
 
-        holder.dateOfBirthTV.text = "30/12/2002"
-
-        holder.selectionCheckBox.setOnCheckedChangeListener { _, isChecked ->
-            selectionList[position] = isChecked
-        }
+        holder.dateOfBirthTV.text = studentList[position].dateOfBirth
+        holder.classNameTV.text = studentList[position].className
 
         holder.setOnClickListener(object : ItemClickListener {
             override fun onClick(view: View, position: Int) {
-                val studentDetailFragment =
-                    StudentDetail.newInstance(studentList[position].studentCode)
-                val manager = activity.supportFragmentManager
-                val transaction = manager.beginTransaction()
-                transaction.add(R.id.student_detail_fragment_container, studentDetailFragment)
-                transaction.addToBackStack("On Top Of Backstack").commit()
+                openStudentDetailFragment(studentList[position].studentCode)
             }
         })
 
+        holder.itemView.setOnLongClickListener {
+            clickedPosition = holder.adapterPosition
+            false
+        }
     }
 
     override fun getItemCount(): Int {
@@ -100,6 +84,14 @@ class StudentListAdapter(
 
     interface ItemClickListener {
         fun onClick(view: View, position: Int)
+    }
+
+    private fun openStudentDetailFragment(studentCode: String) {
+        val studentDetailFragment = StudentDetail.newInstance(studentCode)
+        val manager = activity.supportFragmentManager
+        val transaction = manager.beginTransaction()
+        transaction.add(R.id.student_detail_fragment_container, studentDetailFragment)
+        transaction.addToBackStack("On Top Of Backstack").commit()
     }
 
 }

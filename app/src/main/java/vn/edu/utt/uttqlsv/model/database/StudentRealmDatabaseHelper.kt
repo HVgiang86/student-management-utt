@@ -12,47 +12,49 @@ class StudentRealmDatabaseHelper {
     private lateinit var realm: Realm
 
     fun open() {
-        val config = RealmConfiguration.Builder(setOf(Student::class))
-            .build()
+        val config = RealmConfiguration.Builder(setOf(Student::class)).build()
         realm = Realm.open(config)
-        Log.d("Realm Log","Successfully opened realm: ${realm.configuration.name}")
+        Log.d("Realm Log", "Successfully opened realm: ${realm.configuration.name}")
     }
 
     fun insert(student: Student) {
 
         realm.writeBlocking {
             val studentTarget: Student? =
-                this.query<Student>("studentCode == $0",student.studentCode).first().find()
+                this.query<Student>("studentCode == $0", student.studentCode).first().find()
 
-            if (studentTarget == null)
-                this.copyToRealm(student)
-
-
+            if (studentTarget == null) this.copyToRealm(student)
         }
-        Log.d("Realm Log","Inserted student $student")
+        Log.d("Realm Log", "Inserted student $student")
     }
 
     fun update(studentCode: String, newDataStudent: Student) {
         realm.writeBlocking {
             val studentTarget: Student? =
-                this.query<Student>("studentCode == $0",studentCode).first().find()
+                this.query<Student>("studentCode == $0", studentCode).first().find()
 
             studentTarget?.name = newDataStudent.name
             studentTarget?.gender = newDataStudent.gender
             studentTarget?.grade = newDataStudent.grade
             studentTarget?.className = newDataStudent.className
-            studentTarget?.score = newDataStudent.score
-            studentTarget?.avgScore = newDataStudent.avgScore
             studentTarget?.address = newDataStudent.address
-
+            studentTarget?.mathScore = newDataStudent.mathScore
+            studentTarget?.biologyScore = newDataStudent.biologyScore
+            studentTarget?.chemistryScore = newDataStudent.chemistryScore
+            studentTarget?.englishScore = newDataStudent.englishScore
+            studentTarget?.geographyScore = newDataStudent.geographyScore
+            studentTarget?.historyScore = newDataStudent.historyScore
+            studentTarget?.literatureScore = newDataStudent.literatureScore
+            studentTarget?.physicScore = newDataStudent.physicScore
+            studentTarget?.dateOfBirth = newDataStudent.dateOfBirth
         }
-        Log.d("Realm Log","updated!")
+        Log.d("Realm Log", "updated!")
     }
 
     fun delete(student: Student) {
         realm.writeBlocking {
             val studentTarget: Student? =
-                this.query<Student>("studentCode == $0",student.studentCode).first().find()
+                this.query<Student>("studentCode == $0", student.studentCode).first().find()
             delete(studentTarget!!)
         }
     }
