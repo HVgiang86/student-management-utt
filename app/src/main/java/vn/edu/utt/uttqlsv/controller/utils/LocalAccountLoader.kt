@@ -8,11 +8,9 @@ import vn.edu.utt.uttqlsv.model.Account
 import vn.edu.utt.uttqlsv.model.Gender
 
 object LocalAccountLoader {
-    //Config of shared preferences
     private const val PREFS_FILE = "accounts_storage_file"
     private const val PREFS_MODE = Context.MODE_PRIVATE
 
-    //storage key
     private const val USER_AMOUNT_KEY = "USER_AMOUNT_KEY"
     private const val USER_DETAIL_KEY = "USER_DETAIL_KEY"
 
@@ -29,10 +27,6 @@ object LocalAccountLoader {
         preferences = context.getSharedPreferences(PREFS_FILE, PREFS_MODE)
     }
 
-    /**
-     * this function will get all account stored in Shared Preferences
-     * @return mutable list of accounts
-     */
     fun getStoredAccountList(): MutableList<Account> {
         val numberOfAccount: Int = preferences.getInt(USER_AMOUNT_KEY, 0)
         val accountList = mutableListOf<Account>()
@@ -65,10 +59,6 @@ object LocalAccountLoader {
         return accountList
     }
 
-    /**
-     * store all account to shared preferences
-     * @param accountList list of local accounts
-     */
     fun storeAccountList(accountList: MutableList<Account>) {
         val editor = preferences.edit()
         editor.putInt(USER_AMOUNT_KEY, accountList.size)
