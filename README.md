@@ -56,6 +56,8 @@ Bên cạnh đó, để lưu trữ các tài khoản, ta đơn giản là sử d
 Ứng dụng xây dựng với mô hình MVC (Model - Controller - View)
 Trong đó phân tách:
 - Model: Cơ sở dữ liệu, các model: **Student**, **Account** 
+- Controller: Điều khiển việc **đăng nhập**, **đăng ký**, điều khiển truy cập danh sách tài khoản, danh sách sinh viên.
+- View: Gồm các **Activity** và **Fragment**, định nghĩa giao diện người dùng nhìn thấy
 ## Feature
 Ứng dụng này cho phép bạn:
 
