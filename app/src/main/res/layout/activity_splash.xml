@@ -20,6 +20,6 @@
         android:layout_marginRight="80dp"
         android:adjustViewBounds="true"
         android:foregroundGravity="center"
-        android:src="@drawable/utt_logo_169"
+        android:src="@drawable/ic_kma"
         tools:ignore="ContentDescription" />
 </RelativeLayout>

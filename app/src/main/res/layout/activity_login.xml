@@ -37,7 +37,7 @@
         android:longClickable="false"
         android:padding="32dp"
         android:scaleType="fitXY"
-        android:src="@drawable/utt_logo_169"
+        android:src="@drawable/ic_kma"
         app:layout_constraintBottom_toBottomOf="@id/logo_container"
         app:layout_constraintLeft_toLeftOf="@id/logo_container"
         app:layout_constraintRight_toRightOf="@id/logo_container"
